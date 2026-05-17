@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LumiNest</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --sage: #6b9470;
+      --sage-light: #9dc4a0;
+      --sage-pale: #eaf2ea;
+      --blush: #e0a89e;
+      --blush-pale: #fdf1ef;
+      --cream: #faf6f0;
+      --warm: #fffdf9;
+      --charcoal: #2a2825;
+      --mid: #7a746e;
+      --muted: #b0a89e;
+      --border: #e8e2da;
+      --gold: #c9a96e;
+      --gold-pale: #f7f0e2;
+      --error: #d4736a;
+      --nav-h: 68px;
+      --header-h: 60px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      max-width: 430px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* ── LOGIN ── */
+    #loginScreen {
+      background: var(--warm);
+      justify-content: flex-start;
+    }
+
+    .login-hero {
+      background: linear-gradient(160deg, #243e28, #4a7a50, #7a9e7e);
+      padding: 56px 32px 40px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .login-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .5px;
+    }
+
+    .login-logo span {
+      color: #c8e6ca;
+    }
+
+    .login-tagline {
+      font-size: 14px;
+      color: rgba(255, 255, 255, .75);
+      margin-top: 8px;
+      line-height: 1.55;
+      max-width: 260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .login-feats {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 20px;
+      text-align: left;
+      padding: 0 8px;
+    }
+
+    .login-feat {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .85);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .login-body {
+      padding: 28px 24px 40px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .login-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+
+    .login-sub {
+      font-size: 13px;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    .role-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .role-btn {
+      flex: 1;
+      padding: 11px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mid);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .role-btn.active {
+      border-color: var(--sage);
+      background: var(--sage-pale);
+      color: var(--sage);
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 5px;
+      letter-spacing: .2px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      background: var(--cream);
+      color: var(--charcoal);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--sage);
+      background: var(--warm);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      background: var(--cream);
+      color: var(--charcoal);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      background: var(--cream);
+      color: var(--charcoal);
+      resize: none;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-textarea:focus {
+      border-color: var(--sage);
+      background: var(--warm);
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 40px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn-sage {
+      background: var(--sage);
+      color: white;
+    }
+
+    .btn-sage:active {
+      background: #5a8360;
+      transform: scale(.98);
+    }
+
+    /* ── APP SHELL ── */
+    #appScreen {
+      background: var(--cream);
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      height: var(--header-h);
+      background: var(--warm);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .topbar-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--sage);
+    }
+
+    .topbar-logo span {
+      color: var(--blush);
+    }
+
+    .topbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-name {
+      font-size: 12px;
+      color: var(--mid);
+      font-weight: 500;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--sage-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .mode-toggle {
+      display: flex;
+      background: var(--sage-pale);
+      border-radius: 40px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .mode-btn {
+      padding: 5px 12px;
+      border-radius: 40px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--mid);
+      background: transparent;
+      transition: .2s;
+    }
+
+    .mode-btn.active {
+      background: var(--warm);
+      color: var(--sage);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, .08);
+    }
+
+    /* ── PAGE CONTENT ── */
+    .page-scroll {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 80px;
+    }
+
+    .page-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      padding: 0;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      height: var(--nav-h);
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      padding-top: 8px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      padding: 4px 2px;
+      position: relative;
+      border: none;
+      background: transparent;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 22px;
+      line-height: 1;
+      transition: .15s;
+    }
+
+    .nav-item .nav-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: .15s;
+    }
+
+    .nav-item.active .nav-icon {
+      transform: scale(1.08);
+    }
+
+    .nav-item.active .nav-label {
+      color: var(--sage);
+      font-weight: 700;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 0;
+      right: 18%;
+      width: 16px;
+      height: 16px;
+      background: var(--blush);
+      border-radius: 50%;
+      font-size: 9px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 0 16px 14px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--mid);
+      margin-top: 3px;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      margin: 16px 16px 0;
+      background: linear-gradient(130deg, #243e28, #4a7a50);
+      border-radius: 20px;
+      padding: 22px 20px;
+      color: white;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .65);
+      margin-bottom: 4px;
+      font-weight: 500;
+      letter-spacing: .3px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      background: rgba(255, 255, 255, .18);
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 40px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      margin-top: 12px;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      gap: 10px;
+      margin: 0 16px 14px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .stat-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .stat-card {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      flex: 0 0 130px;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--mid);
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    .stat-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 40px;
+      margin-top: 6px;
+    }
+
+    .tag-g {
+      background: var(--sage-pale);
+      color: var(--sage);
+    }
+
+    .tag-b {
+      background: var(--blush-pale);
+      color: #c47a72;
+    }
+
+    .tag-o {
+      background: var(--gold-pale);
+      color: #a07838;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-h {
+      padding: 0 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: .2px;
+    }
+
+    .section-link {
+      font-size: 12px;
+      color: var(--sage);
+      font-weight: 600;
+    }
+
+    /* ── DOCTOR NOTE STRIP ── */
+    .note-strip {
+      border-left: 3px solid var(--sage);
+      padding: 12px 14px;
+      background: var(--sage-pale);
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 10px;
+    }
+
+    .note-strip.gold {
+      border-color: var(--gold);
+      background: var(--gold-pale);
+    }
+
+    .note-strip.blush {
+      border-color: var(--blush);
+      background: var(--blush-pale);
+    }
+
+    .note-meta {
+      font-size: 10.5px;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+
+    .note-text {
+      font-size: 13.5px;
+      color: var(--charcoal);
+      line-height: 1.55;
+    }
+
+    /* ── PILLS ── */
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 40px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .pill-sage {
+      background: var(--sage-pale);
+      color: var(--sage);
+    }
+
+    .pill-blush {
+      background: var(--blush-pale);
+      color: #c47a72;
+    }
+
+    .pill-gold {
+      background: var(--gold-pale);
+      color: #a07838;
+    }
+
+    .pill-muted {
+      background: var(--cream);
+      color: var(--mid);
+      border: 1px solid var(--border);
+    }
+
+    /* ── PROGRESS BAR ── */
+    .prog-bar {
+      height: 8px;
+      background: var(--sage-pale);
+      border-radius: 40px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sage-light), var(--sage));
+      border-radius: 40px;
+    }
+
+    /* ── SLIDER OPTIONS ── */
+    .slider-group {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .slider-opt {
+      flex: 1;
+      text-align: center;
+      padding: 9px 4px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--mid);
+      transition: .15s;
+      -webkit-user-select: none;
+    }
+
+    .slider-opt:active {
+      transform: scale(.95);
+    }
+
+    .slider-opt.selected {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: white;
+    }
+
+    /* ── STREAK DOTS ── */
+    .streak-row {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .sdot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .sdot.done {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: white;
+    }
+
+    .sdot.today {
+      background: var(--blush-pale);
+      border-color: var(--blush);
+      color: var(--blush);
+    }
+
+    /* ── CYCLE CALENDAR ── */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .cal-head {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      padding: 4px 0;
+      letter-spacing: .4px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--mid);
+      -webkit-user-select: none;
+    }
+
+    .cal-day:active {
+      transform: scale(.9);
+    }
+
+    .cal-day.today {
+      background: var(--charcoal);
+      color: white;
+      font-weight: 700;
+    }
+
+    .cal-day.period {
+      background: var(--blush);
+      color: white;
+    }
+
+    .cal-day.fertile {
+      background: var(--sage-light);
+      color: white;
+    }
+
+    .cal-day.ovulation {
+      background: var(--gold);
+      color: white;
+      font-weight: 700;
+    }
+
+    .cal-day.empty {
+      pointer-events: none;
+    }
+
+    .cal-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .cal-legend span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--mid);
+    }
+
+    .cal-legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 40px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .15s;
+      -webkit-user-select: none;
+    }
+
+    .btn:active {
+      transform: scale(.97);
+    }
+
+    .btn-primary {
+      background: var(--sage);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--warm);
+      color: var(--charcoal);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-blush {
+      background: var(--blush);
+      color: white;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--sage);
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+
+    .btn-w {
+      width: 100%;
+      padding: 14px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .pg-header {
+      padding: 20px 16px 12px;
+    }
+
+    .pg-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .pg-sub {
+      font-size: 13px;
+      color: var(--mid);
+      margin-top: 4px;
+    }
+
+    /* ── TABLE ── */
+    .patient-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0 16px;
+    }
+
+    .patient-row {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .patient-row:first-child {
+      border-radius: 14px 14px 0 0;
+    }
+
+    .patient-row:last-child {
+      border-radius: 0 0 14px 14px;
+    }
+
+    .patient-row:not(:last-child) {
+      border-bottom: none;
+    }
+
+    .patient-row:active {
+      background: var(--sage-pale);
+    }
+
+    .patient-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage-pale), var(--blush-pale));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sage);
+      flex-shrink: 0;
+    }
+
+    .patient-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .patient-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .patient-meta {
+      font-size: 11.5px;
+      color: var(--mid);
+      margin-top: 2px;
+    }
+
+    .patient-status {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .sdot-status {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .sdot-on {
+      background: var(--sage);
+    }
+
+    .sdot-att {
+      background: var(--gold);
+    }
+
+    .sdot-off {
+      background: var(--blush);
+    }
+
+    /* ── CHECK-IN CARD ── */
+    .checkin-card {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 0 16px 12px;
+    }
+
+    .checkin-card.pending {
+      border-color: var(--gold);
+    }
+
+    .checkin-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .checkin-week {
+      font-size: 11.5px;
+      color: var(--mid);
+      margin-top: 2px;
+    }
+
+    .checkin-content {
+      font-size: 13px;
+      color: var(--charcoal);
+      line-height: 1.5;
+      margin: 10px 0;
+    }
+
+    .checkin-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    /* ── JOURNEY PHASES ── */
+    .phase-card {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 0 16px 10px;
+      border-left: 4px solid var(--border);
+    }
+
+    .phase-card.done {
+      border-left-color: var(--sage);
+    }
+
+    .phase-card.current {
+      border-left-color: var(--gold);
+    }
+
+    .phase-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .phase-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .phase-desc {
+      font-size: 13px;
+      color: var(--mid);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── BBT CHART ── */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 80px;
+      margin: 12px 0;
+    }
+
+    .bar-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .bar-fill {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .bar-label {
+      font-size: 8.5px;
+      color: var(--mid);
+    }
+
+    /* ── BREATH ── */
+    .breath-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .breath-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2.5px solid var(--sage-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 4s ease;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--sage);
+    }
+
+    .breath-circle.inhale {
+      transform: scale(1.35);
+      background: var(--sage-pale);
+    }
+
+    .breath-circle.exhale {
+      transform: scale(.8);
+      background: var(--warm);
+    }
+
+    .breath-hint {
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: var(--mid);
+      text-align: center;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 40, 37, .5);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--warm);
+      border-radius: 24px 24px 0 0;
+      padding: 24px 20px 40px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: slideUp .3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%)
+      }
+
+      to {
+        transform: translateY(0)
+      }
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 40px;
+      margin: 0 auto 20px;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--charcoal);
+      color: white;
+      padding: 11px 20px;
+      border-radius: 40px;
+      font-size: 13px;
+      z-index: 200;
+      display: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+    }
+
+    .toast.show {
+      display: block;
+      animation: toastIn .3s ease;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0)
+      }
+    }
+
+    /* ── REPORT ROWS ── */
+    .rrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .rrow:last-child {
+      border: none;
+    }
+
+    .rrow-label {
+      color: var(--mid);
+    }
+
+    .rrow-val {
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 14px 0;
+    }
+
+    /* ── RESPONSE BOX ── */
+    .response-box {
+      background: var(--sage-pale);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    /* ── FERTILITY ALERT ── */
+    .fertility-alert {
+      background: linear-gradient(120deg, var(--gold-pale), var(--blush-pale));
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 0 16px 14px;
+    }
+
+    /* ── CM GUIDE ── */
+    .cm-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .cm-row:last-child {
+      border: none;
+    }
+
+    .cm-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* scrollbar none globally */
+    *::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ══════════ LOGIN ══════════ -->
+  <div class="screen active" id="loginScreen">
+    <div class="login-hero">
+      <div class="login-logo">Lumi<span>Nest</span></div>
+      <div class="login-tagline">Your holistic fertility wellness journey, guided every step of the way</div>
+      <div class="login-feats">
+        <div class="login-feat">🌱 Daily tracking in under 2 minutes</div>
+        <div class="login-feat">👩‍⚕️ Direct guidance from Dr. Divya & Dr. Praveen</div>
+        <div class="login-feat">📊 8-week personalised program</div>
+      </div>
+    </div>
+    <div class="login-body">
+      <div class="login-heading">Welcome back</div>
+      <div class="login-sub">Sign in to continue your journey</div>
+      <div class="role-row">
+        <button class="role-btn active" onclick="setRole('patient',this)">👫 Couple</button>
+        <button class="role-btn" onclick="setRole('doctor',this)">👩‍⚕️ Doctor</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" value="priya.arjun@email.com" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" value="••••••••">
+      </div>
+      <button class="btn-full btn-sage" style="margin-top:8px;" onclick="login()">Sign In to LumiNest</button>
+      <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:14px;">Demo: choose role above then tap
+        Sign In</p>
+    </div>
+  </div>
+
+  <!-- ══════════ MAIN APP ══════════ -->
+  <div class="screen" id="appScreen">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-logo">Lumi<span>Nest</span></div>
+      <div class="topbar-right">
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="modePatientBtn" onclick="switchMode('patient')">Patient</button>
+          <button class="mode-btn" id="modeDoctorBtn" onclick="switchMode('doctor')">Doctor</button>
+        </div>
+        <div class="avatar" id="navAvatar">PA</div>
+      </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="page-scroll" id="pageScroll">
+
+      <!-- ── PATIENT: HOME ── -->
+      <div class="page active" id="p-home">
+        <div class="hero">
+          <div class="hero-eyebrow">Good morning ✦</div>
+          <div class="hero-title">Hello, Priya & Arjun 🌿<br><span style="font-weight:400;font-size:22px;">Week 3 of
+              your journey</span></div>
+          <div class="hero-pill">Sprout Package · 3/8 weeks</div>
+        </div>
+
+        <div class="stat-row" style="margin-top:14px;">
+          <div class="stat-card">
+            <div class="stat-num">18</div>
+            <div class="stat-label">Day streak</div>
+            <div class="stat-tag tag-g">🔥 Keep going</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Days to fertile window</div>
+            <div class="stat-tag tag-o">Coming up</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Check-ins submitted</div>
+            <div class="stat-tag tag-g">On track</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Doctor note unread</div>
+            <div class="stat-tag tag-b">New 💌</div>
+          </div>
+        </div>
+
+        <!-- Today's Log CTA -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div class="card-title">Today's Log</div>
+              <div class="card-sub">Haven't logged yet today</div>
+            </div>
+            <button class="btn btn-primary" onclick="switchPatientTab('p-daily')">Log Now</button>
+          </div>
+          <div class="streak-row" id="homeStreakRow"></div>
+          <div style="font-size:12px;color:var(--mid);">18 day streak — you're on a roll 🌱</div>
+        </div>
+
+        <!-- Cycle Overview -->
+        <div class="section-h"><span class="section-title">Cycle Overview</span><span class="pill pill-gold">Day 14 of
+            28</span></div>
+        <div class="card" style="margin-top:0;">
+          <div
+            style="height:10px;background:var(--sage-pale);border-radius:40px;overflow:hidden;position:relative;margin-bottom:10px;">
+            <div
+              style="position:absolute;left:0;width:50%;height:100%;background:linear-gradient(90deg,var(--blush-pale),var(--sage-light));border-radius:40px;">
+            </div>
+            <div style="position:absolute;left:42%;width:15%;height:100%;background:var(--gold);opacity:.7;"></div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="pill pill-blush">Period Day 1–5</span>
+            <span class="pill pill-gold">Fertile: Day 12–16</span>
+            <span class="pill pill-sage">Ovulation ~Day 14</span>
+          </div>
+        </div>
+
+        <!-- Latest doctor note -->
+        <div class="section-h"><span class="section-title">Latest from Dr. Divya</span><span class="section-link"
+            onclick="switchPatientTab('p-doctor')">See all →</span></div>
+        <div style="margin:0 16px 14px;">
+          <div class="note-strip">
+            <div class="note-meta">Dr. Divya Krishnan · May 12 · Week 3</div>
+            <div class="note-text">Your CM progression is showing excellent signs. The egg-white consistency on Day 12
+              is exactly what we want to see. You are in your fertile window now — this is a great time to connect with
+              your partner.</div>
+          </div>
+        </div>
+
+        <!-- 8 Week Progress -->
+        <div class="section-h"><span class="section-title">8-Week Journey</span><span class="section-link"
+            onclick="switchPatientTab('p-journey')">Details →</span></div>
+        <div class="card" style="margin-top:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;color:var(--mid);">Pattern Recognition phase</span>
+            <span style="font-size:13px;font-weight:700;color:var(--sage);">37.5%</span>
+          </div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:37.5%;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);">
+            <span>Awareness</span><span style="color:var(--gold);font-weight:700;">Patterns
+              ◀</span><span>Ovulation</span><span>Optimise</span>
+          </div>
+          <div
+            style="margin-top:12px;background:var(--gold-pale);border-radius:10px;padding:10px 12px;font-size:12.5px;color:#a07838;">
+            📅 Next consultation: <strong>June 21</strong> with Dr. Praveen
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: DAILY TRACKER ── -->
+      <div class="page" id="p-daily">
+        <div class="pg-header">
+          <div class="pg-title">Daily Tracker</div>
+          <div class="pg-sub" id="dailyDate"></div>
+        </div>
+
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">⚡ Energy Level</label>
+            <div class="slider-group" id="energy">
+              <div class="slider-opt" onclick="sel(this)">😴 Low</div>
+              <div class="slider-opt selected" onclick="sel(this)">😐 Okay</div>
+              <div class="slider-opt" onclick="sel(this)">😊 Good</div>
+              <div class="slider-opt" onclick="sel(this)">⚡ High</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🌈 Mood</label>
+            <div class="slider-group" id="mood">
+              <div class="slider-opt" onclick="sel(this)">😞 Low</div>
+              <div class="slider-opt" onclick="sel(this)">😐 Neutral</div>
+              <div class="slider-opt selected" onclick="sel(this)">🙂 Good</div>
+              <div class="slider-opt" onclick="sel(this)">😄 Great</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">💤 Sleep Quality</label>
+            <div class="slider-group" id="sleep">
+              <div class="slider-opt" onclick="sel(this)">😫 Poor</div>
+              <div class="slider-opt selected" onclick="sel(this)">😌 Okay</div>
+              <div class="slider-opt" onclick="sel(this)">😴 Good</div>
+              <div class="slider-opt" onclick="sel(this)">✨ Great</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🌺 Cervical Mucus</label>
+            <select class="form-select">
+              <option>Select type...</option>
+              <option selected>Creamy / Lotion-like</option>
+              <option>Watery</option>
+              <option>Egg-white (stretchy)</option>
+              <option>Dry / None</option>
+              <option>Sticky</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🤒 Symptoms</label>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;" id="symptomPills">
+              <span class="pill pill-muted" style="cursor:pointer;" onclick="togglePill(this)">Bloating</span>
+              <span class="pill pill-sage" style="cursor:pointer;" onclick="togglePill(this)">Breast tenderness ✓</span>
+              <span class="pill pill-muted" style="cursor:pointer;" onclick="togglePill(this)">Cramps</span>
+              <span class="pill pill-muted" style="cursor:pointer;" onclick="togglePill(this)">Headache</span>
+              <span class="pill pill-muted" style="cursor:pointer;" onclick="togglePill(this)">Spotting</span>
+              <span class="pill pill-muted" style="cursor:pointer;" onclick="togglePill(this)">Nausea</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">📝 Notes</label>
+            <textarea class="form-textarea" rows="3"
+              placeholder="Anything you noticed today...">Feeling energetic. Noticed clear CM this morning.</textarea>
+          </div>
+          <div class="streak-row" id="dailyStreakRow"></div>
+          <button class="btn btn-primary btn-w" onclick="saveLog()">Save Today's Log ✓</button>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: CYCLE ── -->
+      <div class="page" id="p-cycle">
+        <div class="pg-header">
+          <div class="pg-title">Cycle Tracker</div>
+          <div class="pg-sub">Track your cycle, flow & patterns</div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div class="card-title">May 2025</div>
+            <div style="display:flex;gap:4px;">
+              <button class="btn btn-secondary" style="padding:6px 12px;font-size:18px;">‹</button>
+              <button class="btn btn-secondary" style="padding:6px 12px;font-size:18px;">›</button>
+            </div>
+          </div>
+          <div class="cal-grid" id="cycleCalendar"></div>
+          <div class="cal-legend">
+            <span>
+              <div class="cal-legend-dot" style="background:var(--blush);"></div>Period
+            </span>
+            <span>
+              <div class="cal-legend-dot" style="background:var(--sage-light);"></div>Fertile
+            </span>
+            <span>
+              <div class="cal-legend-dot" style="background:var(--gold);"></div>Ovulation
+            </span>
+            <span>
+              <div class="cal-legend-dot" style="background:var(--charcoal);"></div>Today
+            </span>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Log Today</span><span class="pill pill-sage">Cycle day
+            14</span></div>
+        <div class="card" style="margin-top:0;">
+          <div class="form-group">
+            <label class="form-label">Bleeding</label>
+            <div class="slider-group">
+              <div class="slider-opt selected" onclick="sel(this)">None</div>
+              <div class="slider-opt" onclick="sel(this)">Light</div>
+              <div class="slider-opt" onclick="sel(this)">Medium</div>
+              <div class="slider-opt" onclick="sel(this)">Heavy</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pain Level</label>
+            <div class="slider-group">
+              <div class="slider-opt selected" onclick="sel(this)">None</div>
+              <div class="slider-opt" onclick="sel(this)">Mild</div>
+              <div class="slider-opt" onclick="sel(this)">Moderate</div>
+              <div class="slider-opt" onclick="sel(this)">Severe</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-w" onclick="saveLog()">Save</button>
+        </div>
+
+        <div class="section-h"><span class="section-title">Cycle Insights</span></div>
+        <div class="card" style="margin-top:0;">
+          <div class="rrow"><span class="rrow-label">Average cycle length</span><span class="rrow-val">28 days</span>
+          </div>
+          <div class="rrow"><span class="rrow-label">Current cycle day</span><span class="rrow-val">Day 14</span></div>
+          <div class="rrow"><span class="rrow-label">Last period</span><span class="rrow-val">May 1–5</span></div>
+          <div class="rrow"><span class="rrow-label">Fertile window</span><span class="rrow-val">May 12–16</span></div>
+          <div class="rrow"><span class="rrow-label">Estimated ovulation</span><span class="rrow-val">May 14</span>
+          </div>
+          <div class="rrow"><span class="rrow-label">Next period (est.)</span><span class="rrow-val">May 28</span></div>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: OVULATION ── -->
+      <div class="page" id="p-ovulation">
+        <div class="pg-header">
+          <div class="pg-title">Ovulation Tracker</div>
+          <div class="pg-sub">Track your fertile signs</div>
+        </div>
+
+        <div class="fertility-alert">
+          <div style="font-size:11px;font-weight:700;color:#a07838;margin-bottom:4px;">🥚 FERTILE WINDOW ACTIVE</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);">
+            Today is your most fertile day</div>
+          <div style="font-size:13px;color:var(--mid);margin-top:6px;">Cycle Day 14 — Estimated ovulation based on your
+            CM & cycle data.</div>
+        </div>
+
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">🌺 CM Type</label>
+            <div class="slider-group">
+              <div class="slider-opt" onclick="sel(this)">Dry</div>
+              <div class="slider-opt" onclick="sel(this)">Sticky</div>
+              <div class="slider-opt" onclick="sel(this)">Creamy</div>
+              <div class="slider-opt selected" onclick="sel(this)">Egg-white</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">💧 Sensation</label>
+            <div class="slider-group">
+              <div class="slider-opt" onclick="sel(this)">Dry</div>
+              <div class="slider-opt" onclick="sel(this)">Sticky</div>
+              <div class="slider-opt selected" onclick="sel(this)">Wet</div>
+              <div class="slider-opt" onclick="sel(this)">Slippery</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🌡️ Basal Body Temp (°C)</label>
+            <input class="form-input" type="number" step="0.1" value="36.7" placeholder="e.g. 36.7">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ovulation Pain?</label>
+            <div style="display:flex;gap:14px;margin-top:6px;">
+              <label style="display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer;"><input type="radio"
+                  name="ov" checked> Yes — mild</label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer;"><input type="radio"
+                  name="ov"> No</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-w" onclick="saveLog()">Save Observations ✓</button>
+        </div>
+
+        <div class="section-h"><span class="section-title">CM Progression Guide</span></div>
+        <div class="card" style="margin-top:0;">
+          <div class="cm-row">
+            <div class="cm-dot" style="background:var(--muted);"></div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;">Dry / None</div>
+              <div style="font-size:11.5px;color:var(--mid);">Post-period · Low fertility</div>
+            </div>
+          </div>
+          <div class="cm-row">
+            <div class="cm-dot" style="background:#c8b4a0;"></div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;">Sticky / Tacky</div>
+              <div style="font-size:11.5px;color:var(--mid);">Low fertility</div>
+            </div>
+          </div>
+          <div class="cm-row">
+            <div class="cm-dot" style="background:var(--sage-pale);border:1px solid var(--sage-light);"></div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;">Creamy / Lotion</div>
+              <div style="font-size:11.5px;color:var(--mid);">Building fertility</div>
+            </div>
+          </div>
+          <div class="cm-row">
+            <div class="cm-dot" style="background:var(--sage-light);"></div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;">Watery</div>
+              <div style="font-size:11.5px;color:var(--mid);">Increasing fertility</div>
+            </div>
+          </div>
+          <div class="cm-row">
+            <div class="cm-dot" style="background:var(--gold);"></div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:700;color:var(--gold);">Egg-white (stretchy) ✦</div>
+              <div style="font-size:11.5px;color:var(--sage);font-weight:600;">Peak fertility 🌟</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">BBT Trend (14 days)</span></div>
+        <div class="card" style="margin-top:0;">
+          <div class="bar-chart" id="bbtChart"></div>
+          <div style="font-size:11.5px;color:var(--mid);">Temperature rise after ovulation confirms fertile phase</div>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: CHECK-IN ── -->
+      <div class="page" id="p-checkin">
+        <div class="pg-header">
+          <div class="pg-title">Weekly Check-In</div>
+          <div class="pg-sub">Week 3 · Due by Sunday evening</div>
+        </div>
+
+        <div class="card">
+          <div
+            style="background:var(--sage-pale);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--sage);margin-bottom:14px;">
+            Dr. Divya will respond within 48 hours of your submission.</div>
+          <div class="form-group">
+            <label class="form-label">Overall health this week</label>
+            <textarea class="form-textarea" rows="3"
+              placeholder="Energy, mood, sleep...">Energy higher around Day 12–14. Sleep disrupted 2 nights but okay. Mood positive — feeling hopeful.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">What improved?</label>
+            <textarea class="form-textarea" rows="2"
+              placeholder="Symptoms that got better...">Breast tenderness from last week reduced significantly.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">What worsened or is new?</label>
+            <textarea class="form-textarea" rows="2"
+              placeholder="New or worsening symptoms...">Mild lower back ache on Days 12–13.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cycle & ovulation this week</label>
+            <textarea class="form-textarea" rows="3"
+              placeholder="CM, fertile signs...">Egg-white CM on Days 12 & 13. Wet sensation. Mild twinge on right side, Day 13.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emotional state</label>
+            <div class="slider-group">
+              <div class="slider-opt" onclick="sel(this)">Struggling</div>
+              <div class="slider-opt" onclick="sel(this)">Okay</div>
+              <div class="slider-opt selected" onclick="sel(this)">Good</div>
+              <div class="slider-opt" onclick="sel(this)">Excellent</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Question for Dr. Divya?</label>
+            <textarea class="form-textarea" rows="2"
+              placeholder="Optional question...">Is the right-sided twinge on Day 13 Mittelschmerz?</textarea>
+          </div>
+          <button class="btn btn-primary btn-w" onclick="submitCheckin()">Submit Week 3 Check-In ✓</button>
+        </div>
+
+        <div class="section-h"><span class="section-title">Previous Check-Ins</span></div>
+        <div style="margin:0 16px 14px;">
+          <div class="note-strip" style="margin-bottom:10px;">
+            <div class="note-meta">Week 2 · May 6 · Dr. Divya responded</div>
+            <div class="note-text" style="font-size:12.5px;">Great progress! The CM transition you're seeing shows your
+              body moving toward the fertile phase. Keep up daily observations...</div>
+          </div>
+          <div class="note-strip">
+            <div class="note-meta">Week 1 · Apr 29 · Dr. Divya responded</div>
+            <div class="note-text" style="font-size:12.5px;">Welcome to your journey! Your intake form showed important
+              patterns we'll monitor. Focus on establishing observation habits this week...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: DOCTOR'S CORNER ── -->
+      <div class="page" id="p-doctor">
+        <div class="pg-header">
+          <div class="pg-title">Doctor's Corner</div>
+          <div class="pg-sub">Personalised guidance from your care team</div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Notes for You</span></div>
+        <div style="margin:0 16px 14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div class="note-strip" style="flex:1;">
+              <div style="display:flex;justify-content:space-between;">
+                <div class="note-meta">Dr. Divya · May 12</div><span class="pill pill-blush"
+                  style="font-size:10px;">New</span>
+              </div>
+              <div class="note-text">Your CM progression is showing excellent signs. The egg-white consistency on Day 12
+                is exactly what we want to see. You are in your fertile window now — this is a great time to connect
+                with your partner.</div>
+            </div>
+          </div>
+          <div class="note-strip gold" style="margin-bottom:8px;">
+            <div class="note-meta">Dr. Praveen · May 10 · For Arjun</div>
+            <div class="note-text">Week 3 is important. The fertile window is approaching. Stay well-rested, hydrated,
+              and avoid extreme heat. Check the educational resource below for optimal timing guidance.</div>
+          </div>
+          <div class="note-strip blush">
+            <div class="note-meta">Dr. Divya · May 7</div>
+            <div class="note-text">Your energy dip on Days 8–9 is very common pre-fertile phase. CM is transitioning
+              beautifully. No red flags. Keep going!</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="font-size:17px;">Ask a Follow-Up Question</div>
+          <div class="card-sub">Dr. Divya responds within 24 hours</div>
+          <div class="form-group" style="margin-top:12px;">
+            <textarea class="form-textarea" rows="3" placeholder="Type your question here..."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="saveLog()">Send Question</button>
+        </div>
+
+        <div class="section-h" style="margin-top:4px;"><span class="section-title">Educational Resources</span></div>
+        <div style="margin:0 16px 14px;display:flex;flex-direction:column;gap:8px;">
+          <div
+            style="background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13.5px;font-weight:600;">Understanding CM Progression</div>
+              <div style="font-size:11.5px;color:var(--mid);margin-top:2px;">Complete guide to cervical mucus</div>
+            </div>
+            <button class="btn btn-ghost">Read →</button>
+          </div>
+          <div
+            style="background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13.5px;font-weight:600;">The Male Partner's Role</div>
+              <div style="font-size:11.5px;color:var(--mid);margin-top:2px;">For Arjun — fertile window guide</div>
+            </div>
+            <button class="btn btn-ghost">Read →</button>
+          </div>
+          <div
+            style="background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13.5px;font-weight:600;">BBT Charting Guide</div>
+              <div style="font-size:11.5px;color:var(--mid);margin-top:2px;">Taking & interpreting temperature</div>
+            </div>
+            <button class="btn btn-ghost">Read →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PATIENT: JOURNEY ── -->
+      <div class="page" id="p-journey">
+        <div class="pg-header">
+          <div class="pg-title">8-Week Journey</div>
+          <div class="pg-sub">Sprout Package · Started April 28, 2025</div>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;color:var(--mid);">Overall progress</span>
+            <span style="font-size:14px;font-weight:700;color:var(--sage);">37.5% Complete</span>
+          </div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:37.5%;"></div>
+          </div>
+        </div>
+
+        <div class="phase-card done">
+          <div class="phase-eyebrow" style="color:var(--sage);">Phase 1 · Weeks 1–2 · ✓ Complete</div>
+          <div class="phase-title">Awareness</div>
+          <div class="phase-desc">Building baseline observations of your cycle, energy, and body signals. Establishing
+            tracking habits.</div>
+          <div style="margin-top:10px;"><span class="pill pill-sage">Both check-ins submitted</span></div>
+        </div>
+
+        <div class="phase-card current">
+          <div class="phase-eyebrow" style="color:var(--gold);">Phase 2 · Weeks 3–4 · In Progress ◀</div>
+          <div class="phase-title">Pattern Recognition</div>
+          <div class="phase-desc">Identifying your unique cycle patterns — CM progression, energy shifts, BBT trends.
+            Dr. Divya begins interpretation.</div>
+          <div
+            style="margin-top:10px;background:var(--gold-pale);border-radius:10px;padding:10px 12px;font-size:12.5px;color:#a07838;">
+            📅 Week 4 interpretation: May 26</div>
+        </div>
+
+        <div class="phase-card" style="opacity:.65;">
+          <div class="phase-eyebrow" style="color:var(--muted);">Phase 3 · Weeks 5–6</div>
+          <div class="phase-title">Ovulation Optimisation</div>
+          <div class="phase-desc">Refining fertile window accuracy. Introducing BBT confirmation. Timing optimisation
+            begins.</div>
+        </div>
+
+        <div class="phase-card" style="opacity:.65;margin-bottom:0;">
+          <div class="phase-eyebrow" style="color:var(--muted);">Phase 4 · Weeks 7–8</div>
+          <div class="phase-title">Holistic Optimisation</div>
+          <div class="phase-desc">Final adjustments, lifestyle optimisation, and Week 8 final assessment & report.</div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+
+      <!-- ── PATIENT: WELLNESS ── -->
+      <div class="page" id="p-wellness">
+        <div class="pg-header">
+          <div class="pg-title">Wellness</div>
+          <div class="pg-sub">Emotional support tools for your journey</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Breathing Exercise</div>
+          <div class="card-sub">4-7-8 technique for calm</div>
+          <div class="breath-wrap">
+            <div class="breath-circle" id="breathCircle" onclick="startBreathing()"><span id="breathText">Tap to
+                start</span></div>
+            <div class="breath-hint" id="breathHint">Inhale 4s · Hold 7s · Exhale 8s</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">This Week's Prompt 📔</div>
+          <div
+            style="padding:16px;background:var(--sage-pale);border-radius:12px;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--charcoal);line-height:1.5;margin:12px 0;">
+            "What has this journey taught you about yourself or your relationship?"</div>
+          <textarea class="form-textarea" rows="4" placeholder="Write your reflection..."></textarea>
+          <button class="btn btn-primary" style="margin-top:12px;" onclick="saveLog()">Save Reflection</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">For Arjun 💙</div>
+          <div class="card-sub">Resources for the male partner</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+            <div style="background:var(--cream);border-radius:12px;padding:12px 14px;">
+              <div style="font-size:13.5px;font-weight:600;">Understanding the Fertile Window</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:3px;">Know when timing matters most</div>
+            </div>
+            <div style="background:var(--cream);border-radius:12px;padding:12px 14px;">
+              <div style="font-size:13.5px;font-weight:600;">How to Support Your Partner</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:3px;">Staying connected and present</div>
+            </div>
+            <div style="background:var(--cream);border-radius:12px;padding:12px 14px;">
+              <div style="font-size:13.5px;font-weight:600;">Male Factor Fertility Basics</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:3px;">Your role in the conception journey</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:#f0c4c0;background:#fdf8f7;">
+          <div class="card-title" style="color:var(--error);">⚠️ Red Flag Prompts</div>
+          <div class="card-sub">When to contact your doctor</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
+            <div style="background:#fdf0ee;border-radius:10px;padding:10px 12px;font-size:13px;">No period for
+              <strong>60+ days</strong> without confirmed pregnancy</div>
+            <div style="background:#fdf0ee;border-radius:10px;padding:10px 12px;font-size:13px;">Severe pelvic pain
+              lasting <strong>48+ hours</strong></div>
+            <div style="background:#fdf0ee;border-radius:10px;padding:10px 12px;font-size:13px;">No ovulation signs for
+              <strong>3+ consecutive cycles</strong></div>
+            <div style="background:#fdf0ee;border-radius:10px;padding:10px 12px;font-size:13px;">Heavy bleeding outside
+              period days</div>
+          </div>
+          <div style="font-size:11.5px;color:var(--mid);margin-top:10px;">Guidance prompt only. Contact Dr. Divya via
+            Doctor's Corner.</div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+
+      <!-- ══════════ DOCTOR PAGES ══════════ -->
+
+      <!-- D: DASHBOARD -->
+      <div class="page" id="d-home">
+        <div class="hero" style="background:linear-gradient(130deg,#1e3322,#3a6040);">
+          <div class="hero-eyebrow">Good morning, Doctor ✦</div>
+          <div class="hero-title">Dr. Divya's Dashboard</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.75);margin-top:6px;">3 check-ins pending review</div>
+          <button class="btn"
+            style="background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3);margin-top:14px;"
+            onclick="switchDoctorTab('d-checkins')">Review Queue →</button>
+        </div>
+
+        <div class="stat-row" style="margin-top:14px;">
+          <div class="stat-card">
+            <div class="stat-num">12</div>
+            <div class="stat-label">Active patients</div>
+            <div class="stat-tag tag-g">All packages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Pending check-ins</div>
+            <div class="stat-tag tag-b">Review now</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Consultations this week</div>
+            <div class="stat-tag tag-o">Scheduled</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Inactive 3+ days</div>
+            <div class="stat-tag tag-b">Follow up</div>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Pending Check-Ins</span><span class="section-link"
+            onclick="switchDoctorTab('d-checkins')">See all →</span></div>
+        <div style="margin:0 16px 14px;display:flex;flex-direction:column;gap:8px;">
+          <div
+            style="background:var(--warm);border:1.5px solid var(--gold);border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;"
+            onclick="switchDoctorTab('d-checkins')">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Priya & Arjun</div>
+              <div style="font-size:12px;color:var(--mid);">Week 3 · Today · Bloom</div>
+            </div>
+            <button class="btn btn-primary" style="padding:8px 14px;font-size:12px;">Respond</button>
+          </div>
+          <div
+            style="background:var(--warm);border:1.5px solid var(--gold);border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Kavitha & Suresh</div>
+              <div style="font-size:12px;color:var(--mid);">Week 6 · Yesterday · Sprout</div>
+            </div>
+            <button class="btn btn-primary" style="padding:8px 14px;font-size:12px;">Respond</button>
+          </div>
+          <div
+            style="background:var(--warm);border:1.5px solid var(--gold);border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Meera & Rajan</div>
+              <div style="font-size:12px;color:var(--mid);">Week 1 · May 12 · Seed</div>
+            </div>
+            <button class="btn btn-primary" style="padding:8px 14px;font-size:12px;">Respond</button>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Upcoming Consultations</span></div>
+        <div style="margin:0 16px 14px;display:flex;flex-direction:column;gap:8px;">
+          <div
+            style="background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Priya & Arjun</div>
+              <div style="font-size:12px;color:var(--mid);">May 14 · 10:00 AM · Week 3</div>
+            </div>
+            <span class="pill pill-gold">Tomorrow</span>
+          </div>
+          <div
+            style="background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Lakshmi & Karthik</div>
+              <div style="font-size:12px;color:var(--mid);">May 15 · 3:00 PM · Week 5</div>
+            </div>
+            <span class="pill pill-sage">May 15</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: PATIENTS -->
+      <div class="page" id="d-patients">
+        <div class="pg-header">
+          <div class="pg-title">Patients</div>
+          <div class="pg-sub">12 active couples enrolled</div>
+        </div>
+        <div style="margin:0 16px 12px;display:flex;gap:8px;">
+          <select class="form-select" style="flex:1;padding:10px 12px;font-size:13px;">
+            <option>All Packages</option>
+            <option>Seed</option>
+            <option>Sprout</option>
+            <option>Bloom</option>
+          </select>
+          <select class="form-select" style="flex:1;padding:10px 12px;font-size:13px;">
+            <option>All Status</option>
+            <option>On Track</option>
+            <option>Attention</option>
+            <option>Inactive</option>
+          </select>
+        </div>
+        <div class="patient-list">
+          <div class="patient-row" onclick="openPatient('Priya & Arjun','Bloom','Week 3')">
+            <div class="patient-avatar">PA</div>
+            <div class="patient-info">
+              <div class="patient-name">Priya & Arjun</div>
+              <div class="patient-meta">Bloom · Week 3 · Last: Today</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-on"></div><span class="pill pill-sage" style="font-size:10px;">On
+                Track</span>
+            </div>
+          </div>
+          <div class="patient-row" onclick="openPatient('Kavitha & Suresh','Sprout','Week 6')">
+            <div class="patient-avatar" style="background:linear-gradient(135deg,#e8f0e8,#f5edde);">KS</div>
+            <div class="patient-info">
+              <div class="patient-name">Kavitha & Suresh</div>
+              <div class="patient-meta">Sprout · Week 6 · Last: Yesterday</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-on"></div><span class="pill pill-sage" style="font-size:10px;">On
+                Track</span>
+            </div>
+          </div>
+          <div class="patient-row" onclick="openPatient('Meera & Rajan','Seed','Week 1')">
+            <div class="patient-avatar" style="background:linear-gradient(135deg,#fdf1ef,#fdf0e8);">MR</div>
+            <div class="patient-info">
+              <div class="patient-name">Meera & Rajan</div>
+              <div class="patient-meta">Seed · Week 1 · Last: May 12</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-att"></div><span class="pill pill-gold"
+                style="font-size:10px;">Attention</span>
+            </div>
+          </div>
+          <div class="patient-row" onclick="openPatient('Lakshmi & Karthik','Bloom','Week 5')">
+            <div class="patient-avatar">LK</div>
+            <div class="patient-info">
+              <div class="patient-name">Lakshmi & Karthik</div>
+              <div class="patient-meta">Bloom · Week 5 · Last: May 11</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-on"></div><span class="pill pill-sage" style="font-size:10px;">On
+                Track</span>
+            </div>
+          </div>
+          <div class="patient-row" onclick="openPatient('Sunita & Pavan','Sprout','Week 4')">
+            <div class="patient-avatar" style="background:linear-gradient(135deg,#fdf1ef,#eaf2ea);">SP</div>
+            <div class="patient-info">
+              <div class="patient-name">Sunita & Pavan</div>
+              <div class="patient-meta">Sprout · Week 4 · Last: May 10</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-off"></div><span class="pill pill-blush" style="font-size:10px;">Inactive
+                3d</span>
+            </div>
+          </div>
+          <div class="patient-row" onclick="openPatient('Asha & Mohan','Bloom','Week 8')">
+            <div class="patient-avatar">AM</div>
+            <div class="patient-info">
+              <div class="patient-name">Asha & Mohan</div>
+              <div class="patient-meta">Bloom · Week 8 · Last: May 12</div>
+            </div>
+            <div class="patient-status">
+              <div class="sdot-status sdot-on"></div><span class="pill pill-gold" style="font-size:10px;">Final
+                Week</span>
+            </div>
+          </div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+
+      <!-- D: CHECK-IN QUEUE -->
+      <div class="page" id="d-checkins">
+        <div class="pg-header">
+          <div class="pg-title">Check-In Queue</div>
+          <div class="pg-sub">3 pending · Respond within 48 hours</div>
+        </div>
+
+        <div class="checkin-card pending">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div class="checkin-name">Priya & Arjun</div>
+              <div class="checkin-week">Week 3 · Bloom · Submitted today</div>
+            </div>
+            <span class="pill pill-gold">Pending</span>
+          </div>
+          <div class="divider"></div>
+          <div class="rrow"><span class="rrow-label">General health</span><span class="rrow-val">Good energy,
+              hopeful</span></div>
+          <div class="rrow"><span class="rrow-label">Improved</span><span class="rrow-val">Breast tenderness
+              reduced</span></div>
+          <div class="rrow"><span class="rrow-label">New symptoms</span><span class="rrow-val">Mild back ache
+              D12–13</span></div>
+          <div class="rrow"><span class="rrow-label">CM</span><span class="rrow-val">Egg-white D12–13</span></div>
+          <div class="rrow"><span class="rrow-label">Emotional</span><span class="rrow-val">Good</span></div>
+          <div style="margin-top:10px;font-size:13px;"><strong>Question:</strong> Is the right-sided twinge on Day 13
+            Mittelschmerz?</div>
+          <div class="divider"></div>
+          <div class="form-group">
+            <label class="form-label">Your Response</label>
+            <textarea class="form-textarea" rows="5" placeholder="Type your response to this check-in..."></textarea>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="sendResponse()">Send Response ✓</button>
+            <button class="btn btn-secondary" onclick="saveLog()">Draft</button>
+          </div>
+        </div>
+
+        <div class="checkin-card pending">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div class="checkin-name">Kavitha & Suresh</div>
+              <div class="checkin-week">Week 6 · Sprout · Yesterday</div>
+            </div>
+            <span class="pill pill-gold">Pending</span>
+          </div>
+          <div class="divider"></div>
+          <div class="rrow"><span class="rrow-label">CM</span><span class="rrow-val">Watery / some creamy</span></div>
+          <div class="rrow"><span class="rrow-label">Emotional</span><span class="rrow-val">Okay — feeling
+              anxious</span></div>
+          <div style="margin-top:10px;font-size:13px;"><strong>Question:</strong> Cycle seems shorter this month — is
+            that normal?</div>
+          <div class="form-group" style="margin-top:12px;">
+            <textarea class="form-textarea" rows="4" placeholder="Type your response..."></textarea>
+          </div>
+          <button class="btn btn-primary btn-w" onclick="sendResponse()">Send Response ✓</button>
+        </div>
+      </div>
+
+      <!-- D: GUIDANCE -->
+      <div class="page" id="d-guidance">
+        <div class="pg-header">
+          <div class="pg-title">Post Guidance</div>
+          <div class="pg-sub">Send notes to any patient</div>
+        </div>
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">Patient</label>
+            <select class="form-select">
+              <option>Priya & Arjun (Week 3 · Bloom)</option>
+              <option>Kavitha & Suresh (Week 6 · Sprout)</option>
+              <option>Meera & Rajan (Week 1 · Seed)</option>
+              <option>Lakshmi & Karthik (Week 5 · Bloom)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Note Type</label>
+            <div class="slider-group">
+              <div class="slider-opt selected" onclick="sel(this)">Personal Note</div>
+              <div class="slider-opt" onclick="sel(this)">Cycle Interp.</div>
+              <div class="slider-opt" onclick="sel(this)">General</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <input class="form-input" value="Week 3 Fertile Window Update">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea"
+              rows="6">Your CM progression this week is showing excellent signs. The egg-white consistency on Day 12 is exactly what we want to see. You are in your fertile window now — the mild twinge on Day 13 is classic Mittelschmerz, a positive sign of ovulation.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Attach Resource (optional)</label>
+            <input class="form-input" placeholder="Paste resource link or title...">
+          </div>
+          <button class="btn btn-primary btn-w" onclick="postGuidance()">Post to Patient's Corner ✓</button>
+        </div>
+
+        <div class="section-h"><span class="section-title">Recently Posted</span></div>
+        <div style="margin:0 16px 14px;">
+          <div class="note-strip" style="margin-bottom:8px;">
+            <div class="note-meta">To: Priya & Arjun · May 12</div>
+            <div class="note-text" style="font-size:12.5px;">Week 3 Fertile Window Update — CM progression excellent...
+            </div>
+          </div>
+          <div class="note-strip gold" style="margin-bottom:8px;">
+            <div class="note-meta">To: Priya & Arjun (Dr. Praveen) · May 10</div>
+            <div class="note-text" style="font-size:12.5px;">For Arjun — Male partner fertile window guidance...</div>
+          </div>
+          <div class="note-strip">
+            <div class="note-meta">To: Kavitha & Suresh · May 11</div>
+            <div class="note-text" style="font-size:12.5px;">Week 6 pattern review — strong ovulation signs confirmed...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: ANALYTICS -->
+      <div class="page" id="d-analytics">
+        <div class="pg-header">
+          <div class="pg-title">Analytics</div>
+          <div class="pg-sub">Program-wide metrics</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num">12</div>
+            <div class="stat-label">Active patients</div>
+            <div class="stat-tag tag-g">All packages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">87%</div>
+            <div class="stat-label">Avg check-in rate</div>
+            <div class="stat-tag tag-g">Above target</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Inactive 3+ days</div>
+            <div class="stat-tag tag-b">Follow up</div>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Patients by Package</span></div>
+        <div class="card" style="margin-top:0;">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span
+                  style="font-size:13.5px;font-weight:600;">Bloom</span><span class="pill pill-gold">5 couples</span>
+              </div>
+              <div class="prog-bar" style="height:10px;">
+                <div class="prog-fill" style="width:42%;background:linear-gradient(90deg,var(--gold),#e0a84e);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span
+                  style="font-size:13.5px;font-weight:600;">Sprout</span><span class="pill pill-sage">4 couples</span>
+              </div>
+              <div class="prog-bar" style="height:10px;">
+                <div class="prog-fill" style="width:33%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span
+                  style="font-size:13.5px;font-weight:600;">Seed</span><span class="pill pill-muted">3 couples</span>
+              </div>
+              <div class="prog-bar" style="height:10px;">
+                <div class="prog-fill" style="width:25%;background:linear-gradient(90deg,var(--muted),#8a8078);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Needs Follow-Up</span></div>
+        <div style="margin:0 16px 14px;">
+          <div
+            style="background:var(--warm);border:1.5px solid var(--blush);border-radius:16px;padding:16px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">Sunita & Pavan</div>
+              <div style="font-size:12px;color:var(--mid);">Sprout · Week 4 · Last logged May 10</div>
+            </div>
+            <button class="btn btn-blush" style="padding:8px 14px;font-size:12px;" onclick="saveLog()">Remind</button>
+          </div>
+        </div>
+
+        <div class="section-h"><span class="section-title">Week 8 Final Assessment</span></div>
+        <div class="card" style="margin-top:0;border-color:var(--gold);">
+          <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">⚠️ Asha & Mohan — due this
+            week</div>
+          <div class="form-group">
+            <label class="form-label">Outcome</label>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
+              <label
+                style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;font-size:13.5px;cursor:pointer;"><input
+                  type="radio" name="out"> ✅ Program Complete</label>
+              <label
+                style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;font-size:13.5px;cursor:pointer;"><input
+                  type="radio" name="out"> 📈 Upgrade plan</label>
+              <label
+                style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--sage);background:var(--sage-pale);border-radius:12px;font-size:13.5px;cursor:pointer;"><input
+                  type="radio" name="out" checked> 🔄 Continue 4 more weeks</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-w" onclick="saveLog()">Submit Assessment</button>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+
+    </div><!-- /page-scroll -->
+
+    <!-- BOTTOM NAV — PATIENT -->
+    <div class="bottom-nav" id="patientNav">
+      <button class="nav-item active" id="pnav-home" onclick="switchPatientTab('p-home','pnav-home')">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-label">Home</div>
+      </button>
+      <button class="nav-item" id="pnav-daily" onclick="switchPatientTab('p-daily','pnav-daily')">
+        <div class="nav-icon">📝</div>
+        <div class="nav-label">Daily</div>
+      </button>
+      <button class="nav-item" id="pnav-cycle" onclick="switchPatientTab('p-cycle','pnav-cycle')">
+        <div class="nav-icon">🌙</div>
+        <div class="nav-label">Cycle</div>
+      </button>
+      <button class="nav-item" id="pnav-checkin" onclick="switchPatientTab('p-checkin','pnav-checkin')"
+        style="position:relative;">
+        <div class="nav-icon">✅</div>
+        <div class="nav-label">Check-In</div>
+        <div class="nav-badge">1</div>
+      </button>
+      <button class="nav-item" id="pnav-more" onclick="openMoreMenu()">
+        <div class="nav-icon">☰</div>
+        <div class="nav-label">More</div>
+      </button>
+    </div>
+
+    <!-- BOTTOM NAV — DOCTOR -->
+    <div class="bottom-nav" id="doctorNav" style="display:none;">
+      <button class="nav-item active" id="dnav-home" onclick="switchDoctorTab('d-home','dnav-home')">
+        <div class="nav-icon">🏥</div>
+        <div class="nav-label">Dashboard</div>
+      </button>
+      <button class="nav-item" id="dnav-patients" onclick="switchDoctorTab('d-patients','dnav-patients')">
+        <div class="nav-icon">👥</div>
+        <div class="nav-label">Patients</div>
+      </button>
+      <button class="nav-item" id="dnav-checkins" onclick="switchDoctorTab('d-checkins','dnav-checkins')"
+        style="position:relative;">
+        <div class="nav-icon">📋</div>
+        <div class="nav-label">Queue</div>
+        <div class="nav-badge">3</div>
+      </button>
+      <button class="nav-item" id="dnav-guidance" onclick="switchDoctorTab('d-guidance','dnav-guidance')">
+        <div class="nav-icon">✍️</div>
+        <div class="nav-label">Guidance</div>
+      </button>
+      <button class="nav-item" id="dnav-analytics" onclick="switchDoctorTab('d-analytics','dnav-analytics')">
+        <div class="nav-icon">📊</div>
+        <div class="nav-label">Analytics</div>
+      </button>
+    </div>
+
+  </div><!-- /appScreen -->
+
+  <!-- MORE MENU (bottom sheet) -->
+  <div class="modal-overlay" id="moreMenu">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-title">More</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div
+          style="background:var(--cream);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;"
+          onclick="closeModal('moreMenu');switchPatientTab('p-ovulation','pnav-more')">
+          <span style="font-size:22px;">🥚</span>
+          <div>
+            <div style="font-size:14px;font-weight:600;">Ovulation Tracker</div>
+            <div style="font-size:12px;color:var(--mid);">Track fertile signs & BBT</div>
+          </div>
+        </div>
+        <div
+          style="background:var(--cream);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;"
+          onclick="closeModal('moreMenu');switchPatientTab('p-doctor','pnav-more')">
+          <span style="font-size:22px;">💌</span>
+          <div>
+            <div style="font-size:14px;font-weight:600;">Doctor's Corner</div>
+            <div style="font-size:12px;color:var(--mid);">Notes & guidance from Dr. Divya</div>
+          </div>
+        </div>
+        <div
+          style="background:var(--cream);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;"
+          onclick="closeModal('moreMenu');switchPatientTab('p-journey','pnav-more')">
+          <span style="font-size:22px;">🗺️</span>
+          <div>
+            <div style="font-size:14px;font-weight:600;">8-Week Journey</div>
+            <div style="font-size:12px;color:var(--mid);">Your program phases & progress</div>
+          </div>
+        </div>
+        <div
+          style="background:var(--cream);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;"
+          onclick="closeModal('moreMenu');switchPatientTab('p-wellness','pnav-more')">
+          <span style="font-size:22px;">🌿</span>
+          <div>
+            <div style="font-size:14px;font-weight:600;">Wellness</div>
+            <div style="font-size:12px;color:var(--mid);">Breathing, journal, male partner</div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:13px;color:var(--mid);">Priya & Arjun · Sprout Package</span>
+        <button class="btn btn-secondary" style="font-size:12px;padding:8px 14px;" onclick="logout()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATIENT DETAIL MODAL -->
+  <div class="modal-overlay" id="patientModal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div class="avatar" style="width:48px;height:48px;font-size:16px;" id="modalAvatar">PA</div>
+        <div>
+          <div class="modal-title" style="margin-bottom:2px;" id="modalName">Priya & Arjun</div>
+          <div id="modalMeta" style="font-size:12.5px;color:var(--mid);"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="modalPills"></div>
+      <div class="rrow"><span class="rrow-label">Main concern</span><span class="rrow-val">Irregular cycles</span></div>
+      <div class="rrow"><span class="rrow-label">Trying since</span><span class="rrow-val">8 months</span></div>
+      <div class="rrow"><span class="rrow-label">Avg cycle length</span><span class="rrow-val">28 days</span></div>
+      <div class="rrow"><span class="rrow-label">Energy (avg)</span><span class="rrow-val">3.2/4 Good</span></div>
+      <div class="rrow"><span class="rrow-label">CM peak</span><span class="rrow-val">Egg-white</span></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" style="flex:1;" onclick="closeModal('patientModal')">Close</button>
+        <button class="btn btn-primary" style="flex:1;"
+          onclick="closeModal('patientModal');switchDoctorTab('d-checkins','dnav-checkins')">Review Check-In</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── FIREBASE MOCK ──────────────────────────────────────────
+    const MockFirebase = {
+      db: {},
+      set(col, id, data) { this.db[col] = this.db[col] || {}; this.db[col][id] = { ...data, updatedAt: new Date().toISOString() }; return Promise.resolve(data); },
+      auth: { signIn: (e, p, r) => Promise.resolve({ uid: 'u_' + Date.now(), email: e, role: r }), signOut: () => Promise.resolve() }
+    };
+    const FirebaseService = {
+      async saveTrackerLog(cid, date, data) { await MockFirebase.set('trackerLogs', `${cid}_${date}`, { cid, date, ...data }); showToast('Daily log saved ✓'); },
+      async submitCheckin(cid, week, data) { await MockFirebase.set('weeklyCheckins', `${cid}_w${week}`, { cid, week, ...data, status: 'pending' }); showToast('Check-in submitted! Dr. Divya will respond within 48 hours ✓'); },
+      async postNote(did, cid, note) { await MockFirebase.set('doctorNotes', `${cid}_${Date.now()}`, { did, cid, ...note }); showToast('Note posted to Doctor\'s Corner ✓'); },
+      async sendResponse(id, res) { await MockFirebase.set('responses', id, { res, at: new Date().toISOString() }); showToast('Response sent to patient ✓'); }
+    };
+
+    // ── STATE ──────────────────────────────────────────────────
+    let mode = 'patient';
+    let role = 'patient';
+    let breathing = false, breathTimer = null;
+
+    // ── TOAST ──────────────────────────────────────────────────
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+
+    // ── LOGIN ──────────────────────────────────────────────────
+    function setRole(r, btn) { role = r; document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+
+    async function login() {
+      await MockFirebase.auth.signIn('', '', role);
+      document.getElementById('loginScreen').classList.remove('active');
+      document.getElementById('appScreen').classList.add('active');
+      if (role === 'doctor') {
+        switchMode('doctor');
+        document.getElementById('navAvatar').textContent = 'DK';
+      } else {
+        switchMode('patient');
+      }
+      initUI();
+    }
+
+    function logout() {
+      document.getElementById('appScreen').classList.remove('active');
+      document.getElementById('loginScreen').classList.add('active');
+      closeModal('moreMenu');
+    }
+
+    // ── MODE ───────────────────────────────────────────────────
+    function switchMode(m) {
+      mode = m;
+      document.getElementById('modePatientBtn').classList.toggle('active', m === 'patient');
+      document.getElementById('modeDoctorBtn').classList.toggle('active', m === 'doctor');
+      document.getElementById('patientNav').style.display = m === 'patient' ? 'flex' : 'none';
+      document.getElementById('doctorNav').style.display = m === 'doctor' ? 'flex' : 'none';
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      if (m === 'patient') { document.getElementById('p-home').classList.add('active'); setNavActive('patientNav', 'pnav-home'); }
+      else { document.getElementById('d-home').classList.add('active'); setNavActive('doctorNav', 'dnav-home'); }
+      document.getElementById('pageScroll').scrollTop = 0;
+    }
+
+    // ── PATIENT NAV ────────────────────────────────────────────
+    function switchPatientTab(pageId, navId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      if (navId) setNavActive('patientNav', navId);
+      document.getElementById('pageScroll').scrollTop = 0;
+    }
+
+    // ── DOCTOR NAV ─────────────────────────────────────────────
+    function switchDoctorTab(pageId, navId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      if (navId) setNavActive('doctorNav', navId);
+      document.getElementById('pageScroll').scrollTop = 0;
+    }
+
+    function setNavActive(navId, btnId) {
+      document.querySelectorAll('#' + navId + ' .nav-item').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById(btnId);
+      if (btn) btn.classList.add('active');
+    }
+
+    // ── MODALS ─────────────────────────────────────────────────
+    function openMoreMenu() { document.getElementById('moreMenu').classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    function openPatient(name, pkg, week) {
+      document.getElementById('modalName').textContent = name;
+      document.getElementById('modalMeta').textContent = `${pkg} Package · ${week} of 8`;
+      document.getElementById('modalAvatar').textContent = name.split(' & ').map(n => n[0]).join('');
+      document.getElementById('modalPills').innerHTML = `<span class="pill pill-gold">${pkg}</span><span class="pill pill-sage">${week}</span><span class="pill pill-sage">On Track</span>`;
+      document.getElementById('patientModal').classList.add('open');
+    }
+
+    // ── FORM HELPERS ───────────────────────────────────────────
+    function sel(el) { el.closest('.slider-group').querySelectorAll('.slider-opt').forEach(o => o.classList.remove('selected')); el.classList.add('selected'); }
+
+    function togglePill(el) {
+      const isSage = el.classList.contains('pill-sage');
+      if (isSage) { el.className = 'pill pill-muted'; el.textContent = el.textContent.replace(' ✓', ''); }
+      else { el.className = 'pill pill-sage'; el.textContent += ' ✓'; }
+    }
+
+    // ── FIREBASE ACTIONS ───────────────────────────────────────
+    async function saveLog() { await FirebaseService.saveTrackerLog('couple_001', new Date().toISOString().split('T')[0], { logged: true }); }
+    async function submitCheckin() { await FirebaseService.submitCheckin('couple_001', 3, { submitted: true }); }
+    async function sendResponse() { await FirebaseService.sendResponse('ci_week3', { text: 'Response sent' }); }
+    async function postGuidance() { await FirebaseService.postNote('dr_divya', 'couple_001', { title: 'Week 3 Update', msg: 'Great progress!' }); }
+
+    // ── STREAK DOTS ────────────────────────────────────────────
+    function buildStreak(id) {
+      const c = document.getElementById(id); if (!c) return;
+      c.innerHTML = '';
+      ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach((d, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'sdot ' + (i < 6 ? 'done' : 'today');
+        dot.textContent = i < 6 ? '✓' : d;
+        c.appendChild(dot);
+      });
+    }
+
+    // ── CALENDAR ───────────────────────────────────────────────
+    function buildCalendar() {
+      const cal = document.getElementById('cycleCalendar'); if (!cal) return;
+      cal.innerHTML = '';
+      ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].forEach(d => { const h = document.createElement('div'); h.className = 'cal-head'; h.textContent = d; cal.appendChild(h); });
+      for (let i = 0; i < 3; i++) { const e = document.createElement('div'); e.className = 'cal-day empty'; cal.appendChild(e); }
+      for (let d = 1; d <= 31; d++) {
+        const el = document.createElement('div'); el.className = 'cal-day'; el.textContent = d;
+        if (d >= 1 && d <= 5) el.classList.add('period');
+        else if (d >= 12 && d <= 16) el.classList.add('fertile');
+        if (d === 14) el.classList.add('ovulation');
+        if (d === 13) el.classList.add('today');
+        cal.appendChild(el);
+      }
+    }
+
+    // ── BBT CHART ──────────────────────────────────────────────
+    function buildBbt(id) {
+      const c = document.getElementById(id); if (!c) return;
+      c.innerHTML = '';
+      const temps = [36.4, 36.5, 36.3, 36.6, 36.5, 36.4, 36.7, 36.6, 36.5, 36.6, 36.8, 36.7, 36.5, 36.9];
+      const mn = Math.min(...temps), mx = Math.max(...temps);
+      temps.forEach(t => {
+        const item = document.createElement('div'); item.className = 'bar-item';
+        const h = Math.max(((t - mn) / (mx - mn + .15)) * 70, 12);
+        const col = t >= 36.8 ? 'linear-gradient(180deg,var(--blush),#c47770)' : 'linear-gradient(180deg,var(--sage-light),var(--sage))';
+        item.innerHTML = `<div class="bar-fill" style="height:${h}px;background:${col};"></div><div class="bar-label">${t}</div>`;
+        c.appendChild(item);
+      });
+    }
+
+    // ── BREATHING ──────────────────────────────────────────────
+    function startBreathing() {
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
+      const hint = document.getElementById('breathHint');
+      if (breathing) { breathing = false; clearTimeout(breathTimer); circle.className = 'breath-circle'; text.textContent = 'Tap to start'; hint.textContent = 'Inhale 4s · Hold 7s · Exhale 8s'; return; }
+      breathing = true;
+      function cycle() {
+        if (!breathing) return;
+        circle.className = 'breath-circle inhale'; text.textContent = 'Inhale'; hint.textContent = 'Breathe in slowly... (4 seconds)';
+        breathTimer = setTimeout(() => {
+          if (!breathing) return;
+          text.textContent = 'Hold'; hint.textContent = 'Hold your breath... (7 seconds)';
+          breathTimer = setTimeout(() => {
+            if (!breathing) return;
+            circle.className = 'breath-circle exhale'; text.textContent = 'Exhale'; hint.textContent = 'Breathe out slowly... (8 seconds)';
+            breathTimer = setTimeout(cycle, 8000);
+          }, 7000);
+        }, 4000);
+      }
+      cycle();
+    }
+
+    // ── INIT ───────────────────────────────────────────────────
+    function initUI() {
+      const today = new Date();
+      const el = document.getElementById('dailyDate');
+      if (el) el.textContent = today.toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' });
+      buildStreak('homeStreakRow');
+      buildStreak('dailyStreakRow');
+      buildCalendar();
+      buildBbt('bbtChart');
+    }
+
+    // ── OVERLAY CLOSE ──────────────────────────────────────────
+    ['moreMenu', 'patientModal'].forEach(id => {
+      document.getElementById(id).addEventListener('click', function (e) { if (e.target === this) closeModal(id); });
+    });
+  </script>
+</body>
+
+</html>
