@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "LumiNest Doctor",
+    "slug": "luminest-doctor",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1c2e20"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1c2e20"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.luminest.doctor"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9cde1fac-d94c-4569-97b4-7104d81d7869"
+      }
+    }
+  }
+}

@@ -24,7 +24,6 @@ web-build/
 # Firebase
 firebase-debug.log
 firebase-debug.*.log
-*.json
 
 # Ignore Firebase service accounts and config files specifically
 *firebase-adminsdk*.json
